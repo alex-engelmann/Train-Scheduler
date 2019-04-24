@@ -1,0 +1,11 @@
+body {
+    background-image: url(../images/paisley.png);
+}
+
+button, div, form, input {
+    margin: 10px;
+}
+
+.container {
+    clear: both;
+}
