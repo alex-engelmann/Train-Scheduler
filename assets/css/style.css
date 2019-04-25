@@ -1,9 +1,32 @@
 body {
-    background-image: url(../images/paisley.png);
+    background-image: url(../images/escheresque_@2X.png);
 }
 
-button, div, form, input {
+#title {
+    margin-top: 20px;
+}
+
+label, .card {
     margin: 10px;
+}
+
+label {
+    margin-top: 0px;
+}
+
+#title {
+    font-size: 30pt;
+    text-align: center;
+    background-color: rgb(168, 168, 212);
+    padding: 20px;
+}
+
+.card-header {
+    border-bottom: none;
+}
+.card-body {
+    padding: 5px;
+    margin: 5px;
 }
 
 .container {
