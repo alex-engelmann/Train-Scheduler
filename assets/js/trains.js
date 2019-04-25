@@ -1,20 +1,30 @@
 
-//TODO set up a few default trains
-//TODO each train needs to have 
-// static variables NAME, DESTINATION, FREQUENCY, FIRST TRAIN TIME
-// dynamic variable - NEXT ARRIVAL, MINUTES AWAY
+"use strict";
 
-var train1 = new Map();
+//All the trains are kept in an array
 
-train1.set("Name", "Trenton Express");
-train1.set("Destination", "Trenton");
-train1.set("Frequency", 30); //This is in minutes
-train1.set("FirstTime", "00:00");
-train1.set("MinutesAway", 0);
-train1.set("NextArrival", "");
+var train = new Array();
 
+//Each train is stored as a hash map, here are a few samples
+train[0] = new Map();
+train[0].set("Name", "Trenton Express");
+train[0].set("Destination", "Trenton");
+train[0].set("Frequency", 30); //This is in minutes
+train[0].set("FirstTime", "00:00");
 
+train[1] = new Map();
+train[1].set("Name", "Orient Express");
+train[1].set("Destination", "Bucarest");
+train[1].set("Frequency", 120); //This is in minutes
+train[1].set("FirstTime", "06:00");
 
+train[2] = new Map();
+train[2].set("Name", "Chocolate Choo Choo");
+train[2].set("Destination", "Zurich");
+train[2].set("Frequency", 45); //This is in minutes
+train[2].set("FirstTime", "08:00");
+
+//This does all the math and updates train time variables for any given train
 var calculateTrain = function (train) {
 
   var tFrequency = train.get("Frequency");
@@ -49,8 +59,11 @@ var calculateTrain = function (train) {
 
 }
 
-calculateTrain(train1);
-console.log(train1);
+calculateTrain(train[0]);
+console.log(train[0]);
+
+calculateTrain(train[1]);
+console.log(train[1]);
 
 
 
