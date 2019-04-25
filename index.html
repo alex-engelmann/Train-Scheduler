@@ -66,65 +66,38 @@
                     <div class="card-header">Add Train</div>
                     <div class="card-body">
 
-                            <label for="train-name">Train Name</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="train-name">
-                            </div>
+                        <label for="train-name">Train Name</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="train-name">
+                        </div>
 
-                            <label for="train-name">Destination</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="train-name">
-                            </div>
+                        <label for="train-name">Destination</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="train-name">
+                        </div>
 
-                            <label for="train-name">First Train Time</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="train-name">
-                            </div>
+                        <label for="train-name">First Train Time</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="train-name">
+                        </div>
 
-                            <label for="train-name">Frequency (min)</label>
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" id="train-name">
-                            </div>
+                        <label for="train-name">Frequency (min)</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="train-name">
+                        </div>
 
-                            <button type="button" type="submit" class="btn btn-dark">Submit</button>
-
-
-
-
-
-
+                        <button type="button" type="submit" class="btn btn-dark">Submit</button>
 
                     </div>
                 </div>
-
-
-
-
 
             </div>
             <div class="col-lg-2" id="right-column"></div>
         </div>
         <div class="footer">
-
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!-- Jquery and Bootstrap -->
         <script src="https://code.jquery.com/jquery-3.4.0.js"
             integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -133,6 +106,32 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+
+        <!-- Add moment -->
+        <script src="./assets/js/moment-with-locales.js"></script>
+
+        <!-- Add Firebase -->
+
+        <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-database.js"></script>
+        
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCXxldGAVNAACb0keZBzM20oFi8eJo40Uw",
+                authDomain: "trains-59774.firebaseapp.com",
+                databaseURL: "https://trains-59774.firebaseio.com",
+                projectId: "trains-59774",
+                storageBucket: "trains-59774.appspot.com",
+                messagingSenderId: "514516399802"
+            };
+            firebase.initializeApp(config);
+        </script>
+
+        <!-- My script -->
+
+        <script src="./assets/js/trains.js"></script>
+
 </body>
 
 </html>
