@@ -1,39 +1,70 @@
 
 // "use strict";
 
-//All the trains are kept in an array
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyCXxldGAVNAACb0keZBzM20oFi8eJo40Uw",
+  authDomain: "trains-59774.firebaseapp.com",
+  databaseURL: "https://trains-59774.firebaseio.com",
+  projectId: "trains-59774",
+  storageBucket: "trains-59774.appspot.com",
+  messagingSenderId: "514516399802"
+};
+firebase.initializeApp(config);
 
-var train = new Array();
-
-//Each train is stored as a hash map, here are a few samples
-train[0] = new Map();
-train[0].set("Name", "Trenton Express");
-train[0].set("Destination", "Trenton");
-train[0].set("FirstTime", "00:00");
-train[0].set("Frequency", 30); //This is in minutes
-
-
-train[1] = new Map();
-train[1].set("Name", "Orient Express");
-train[1].set("Destination", "Bucarest");
-train[1].set("FirstTime", "06:00");
-train[1].set("Frequency", 120); //This is in minutes
+var database = firebase.database();
 
 
-train[2] = new Map();
-train[2].set("Name", "Chocolate Choo Choo");
-train[2].set("Destination", "Zurich");
-train[2].set("FirstTime", "08:00");
-train[2].set("Frequency", 45); //This is in minutes
+var myTrains = [
+{
+  Name: "Trenton Express",
+  Destination: "Trenton",
+  FirstTime: "00:00",
+  Frequency: 30
+},
+{
+  Name: "Orient Express",
+  Destination: "Bucarest",
+  FirstTime: "06:00",
+  Frequency: 120
+},
+{
+  Name: "Ave",
+  Destination: "Madrid",
+  FirstTime: "08:00",
+  Frequency: 45
+}
+]
+
+
+database.ref().set({
+  cloudTrains : myTrains
+})
+
+
+// Firebase watcher + initial loader HINT: .on("value")
+database.ref().on("value", function (snapshot) {
+
+  // Log everything that's coming out of snapshot
+  console.log(snapshot.val().cloudTrains);
+  // console.log(snapshot.val().name);
+  // console.log(snapshot.val().email);
+  // console.log(snapshot.val().age);
+  // console.log(snapshot.val().comment);
+
+  // Handle the errors
+}, function (errorObject) {
+  console.log("Errors handled: " + errorObject.code);
+});
 
 
 //This does all the math and updates train time variables for any given train
 var calculateTrain = function (train) {
 
-  var tFrequency = train.get("Frequency");
-  var firstTime = train.get("FirstTime");
+  var tFrequency = train.Frequency;
+  var firstTime = train.FirstTime;
   var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-  var currentTime = moment();
+  var currentTime = moment(); //TODO display the current time for the user
   // console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
   var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
   var tRemainder = diffTime % tFrequency;
@@ -43,19 +74,21 @@ var calculateTrain = function (train) {
   // console.log("ARRIVAL TIME: " + moment(nextTrain).format("HH:mm"));
   var arrivalTime = moment(nextTrain).format("HH:mm")
 
-  train.set("NextArrival", arrivalTime);
-  train.set("MinutesAway", tMinutesTillTrain);
+  train.NextArrival = arrivalTime;
+  train.MinutesAway = tMinutesTillTrain;
 
 }
 
 var addTrain = function () {
-  var newTrain = new Map();
-  newTrain.set("Name", $("#train-name").val());
-  newTrain.set("Destination", $("#train-destination").val());
-  newTrain.set("FirstTime", $("#train-time").val());
-  newTrain.set("Frequency", $("#train-frequency").val()); //This is in minutes
-
-  train.push(newTrain);
+  var newTrain = new Object();
+  newTrain = {
+  Name: $("#train-name").val(),
+  Destination: $("#train-destination").val(),
+  FirstTime: $("#train-time").val(),
+  Frequency: $("#train-frequency").val(), //This is in minutes
+  }
+  myTrains.push(newTrain);
+  console.log(myTrains);
 }
 
 var clearInterface = function () {
@@ -69,19 +102,17 @@ var clearInterface = function () {
 $(document).on("click", "#submit", function () {
   addTrain();
   clearInterface();
-  for (let i = 0; i < train.length; i++) {
-    calculateTrain(train[i]);
-    console.log(train[i]);
+  for (let i = 0; i < myTrains.length; i++) {
+    calculateTrain(myTrains[i]);
+    console.log(myTrains[i]);
     $("tbody").add("<tr>" +
-      "<th scope='row'>" + train[i].get("Name") + "</th>" +
-      "<td>" + train[i].get("Destination") + "</td>" +
-      "<td>" + train[i].get("Frequency") + "</td>" +
-      "<td>" + train[i].get("NextArrival") + "</td>" +
-      "<td>" + train[i].get("MinutesAway") + "</td>" +
+      "<th scope='row'>" + myTrains[i].Name + "</th>" +
+      "<td>" + myTrains[i].Destination + "</td>" +
+      "<td>" + myTrains[i].Frequency + "</td>" +
+      "<td>" + myTrains[i].NextArrival + "</td>" +
+      "<td>" + myTrains[i].MinutesAway + "</td>" +
       "</tr>"
     ).appendTo("tbody");
   }
-})
-
-
-
+}
+)
