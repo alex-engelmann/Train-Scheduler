@@ -14,33 +14,27 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-
+//Configure some starter object trains for the first user
 var myTrains = [
-{
-  Name: "Trenton Express",
-  Destination: "Trenton",
-  FirstTime: "00:00",
-  Frequency: 30
-},
-{
-  Name: "Orient Express",
-  Destination: "Bucarest",
-  FirstTime: "06:00",
-  Frequency: 120
-},
-{
-  Name: "Ave",
-  Destination: "Madrid",
-  FirstTime: "08:00",
-  Frequency: 45
-}
+  {
+    Name: "Trenton Express",
+    Destination: "Trenton",
+    FirstTime: "00:00",
+    Frequency: 30
+  },
+  {
+    Name: "Orient Express",
+    Destination: "Bucarest",
+    FirstTime: "06:00",
+    Frequency: 120
+  },
+  {
+    Name: "Ave",
+    Destination: "Madrid",
+    FirstTime: "08:00",
+    Frequency: 45
+  }
 ]
-
-
-database.ref().set({
-  cloudTrains : myTrains
-})
-
 
 // Firebase watcher + initial loader HINT: .on("value")
 database.ref().on("value", function (snapshot) {
@@ -82,10 +76,10 @@ var calculateTrain = function (train) {
 var addTrain = function () {
   var newTrain = new Object();
   newTrain = {
-  Name: $("#train-name").val(),
-  Destination: $("#train-destination").val(),
-  FirstTime: $("#train-time").val(),
-  Frequency: $("#train-frequency").val(), //This is in minutes
+    Name: $("#train-name").val(),
+    Destination: $("#train-destination").val(),
+    FirstTime: $("#train-time").val(),
+    Frequency: $("#train-frequency").val(), //This is in minutes
   }
   myTrains.push(newTrain);
   console.log(myTrains);
@@ -97,6 +91,11 @@ var clearInterface = function () {
 
   //Clear input fields
   $(".form-control").val("");
+
+  //This sends the trains to the cloud
+  database.ref().set({
+    cloudTrains: myTrains
+  })
 }
 
 $(document).on("click", "#submit", function () {
@@ -104,7 +103,8 @@ $(document).on("click", "#submit", function () {
   clearInterface();
   for (let i = 0; i < myTrains.length; i++) {
     calculateTrain(myTrains[i]);
-    console.log(myTrains[i]);
+    console.log("Current Train: " + myTrains[i]);
+
     $("tbody").add("<tr>" +
       "<th scope='row'>" + myTrains[i].Name + "</th>" +
       "<td>" + myTrains[i].Destination + "</td>" +
