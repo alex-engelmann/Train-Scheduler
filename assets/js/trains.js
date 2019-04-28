@@ -99,28 +99,35 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+//Local trains will be stored as objects in this array
 var myTrains = [];
 
-// //Sends trains to the cloud
-// database.ref().set({
-//   cloudTrains : myTrains
-// })
 
 
-// Firebase watcher + initial loader HINT: .on("value")
-database.ref().on("value", function (snapshot) {
 
-  // Log everything that's coming out of snapshot
-  console.log(snapshot.val().cloudTrains);
-  // Handle the errors
-}, function (errorObject) {
-  console.log("Errors handled: " + errorObject.code);
-});
+window.onload = function () {
+  // Get the trains from the cloud
+  database.ref().on("value", function (snapshot) {
 
+    // Log everything that's coming out of snapshot
+    console.log(snapshot.val().cloudTrains);
+    myTrains = snapshot.val().cloudTrains;
+    clearInterface();
+    displayTrains();
+    // Handle the errors
+  }, function (errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+  })
+  
 
-$(document).on("click", "#submit", function () {
-  addTrain();
-  clearInterface();
-  displayTrains();
+  $(document).on("click", "#submit", function () {
+    addTrain();
+    clearInterface();
+    displayTrains();
+    //Sends trains to the cloud
+    database.ref().set({
+      cloudTrains: myTrains
+    })
+  }
+  )
 }
-)
