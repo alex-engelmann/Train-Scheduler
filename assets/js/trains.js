@@ -6,7 +6,7 @@ var calculateTrain = function (train) {
   var tFrequency = train.Frequency;
   var firstTime = train.FirstTime;
   var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-  var currentTime = moment(); //TODO display the current time for the user
+  $("#currentTime").text("Current Time: " + moment().format("HH:mm"));
   // console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
   var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
   var tRemainder = diffTime % tFrequency;
@@ -110,7 +110,7 @@ window.onload = function () {
   database.ref().on("value", function (snapshot) {
 
     // Log everything that's coming out of snapshot
-    console.log(snapshot.val().cloudTrains);
+    // console.log(snapshot.val().cloudTrains);
     myTrains = snapshot.val().cloudTrains;
     clearInterface();
     displayTrains();
